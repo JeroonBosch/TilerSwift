@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TilerSwift", "TilerSwift.csproj", "{F02E8F64-9636-A910-1F74-BA15B9A79A25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TilerSwift.Editor", "TilerSwift.Editor.csproj", "{FAB6D690-C0D2-6D4F-5A0D-C5AE251E297C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F02E8F64-9636-A910-1F74-BA15B9A79A25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F02E8F64-9636-A910-1F74-BA15B9A79A25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F02E8F64-9636-A910-1F74-BA15B9A79A25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F02E8F64-9636-A910-1F74-BA15B9A79A25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAB6D690-C0D2-6D4F-5A0D-C5AE251E297C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAB6D690-C0D2-6D4F-5A0D-C5AE251E297C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAB6D690-C0D2-6D4F-5A0D-C5AE251E297C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAB6D690-C0D2-6D4F-5A0D-C5AE251E297C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
