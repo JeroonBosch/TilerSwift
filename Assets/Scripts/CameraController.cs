@@ -5,7 +5,6 @@ public class CameraController : MonoBehaviour {
 
     private void Awake()
     {
-        Debug.Log(Camera.main.projectionMatrix[0, 2] + " "+ Camera.main.projectionMatrix[1, 2]);
         SetObliqueness(0, 0);
     }
 

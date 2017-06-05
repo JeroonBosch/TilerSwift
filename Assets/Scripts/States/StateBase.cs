@@ -17,7 +17,6 @@ public class StateBase  {
 	private void Playing()
 	{
 		Time.timeScale = 1.0f;
-		RootController.Instance.EnableControls ();
 	}
 	private void Menu()
 	{

@@ -17,7 +17,6 @@ public class RenderGoals : MonoBehaviour {
 
         for (int i = 0; i < goals.Length; i++)
         {
-            Goal goal = goals[i];
             GameObject goalGO = Instantiate(goalText);
             texts[i] = goalGO;
             goalGO.transform.SetParent(this.transform, false);

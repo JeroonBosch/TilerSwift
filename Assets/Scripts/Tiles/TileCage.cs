@@ -9,7 +9,7 @@ public class TileCage : MonoBehaviour {
     private Transform cageBar3;
 
     private int _hitpoints;
-    public int hitpoints { get { return _hitpoints; } set { _hitpoints = value; Debug.Log("hitpoints now: " + _hitpoints); } }
+    public int hitpoints { get { return _hitpoints; } set { _hitpoints = value; } }
 
     // Use this for initialization
     void Awake () {

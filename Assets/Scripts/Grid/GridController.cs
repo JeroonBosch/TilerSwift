@@ -10,7 +10,6 @@ public class GridController : MonoBehaviour {
     //private default_config config;
     private Level_Settings config;
     protected List<Cell>[] cellColumns;
-    private List<BaseTile> allTiles = new List<BaseTile>();
     public List<BaseTile> attemptedTumble = new List<BaseTile>();
 
     private bool interactable = true;
@@ -75,6 +74,27 @@ public class GridController : MonoBehaviour {
                             activeTile = tile;
                             attemptedTumble.Clear();
                         }
+                    } else if (hit.collider.gameObject.tag == "SuperRowButton") {
+                        Debug.Log("superrowbutton clicked");
+                        Transform cellTransform = hit.collider.transform.parent;
+                        string tag = cellTransform.tag;
+                        List<Cell> rowCells = GetRowCells(ConvertTagToRowNumber(tag));
+
+                        foreach (Cell cell in rowCells)
+                            cell.tile.Destroy(1);
+
+                        for (int w = 0; w < config.goalArray.Length; w++)
+                        {
+                            if (config.goalArray[w] is SuperRow_Goal)
+                            {
+                                SuperRow_Goal goal = config.goalArray[w] as SuperRow_Goal;
+                                goal.currentAmount++;
+                                goal.UpdateText();
+                            }
+                        }
+
+                        Destroy(hit.collider.gameObject);
+                        Debug.Log("superrowbutton handled");
                     }
                 }
             }
@@ -92,7 +112,6 @@ public class GridController : MonoBehaviour {
             {
                 float cursorDeltaZ = (cursor.z - lastCursorPos.z);
                 float cursorDeltaX = (cursor.x - lastCursorPos.x);
-                float cursorDeltaY = (cursor.y - lastCursorPos.y);
 
                 activeTile.TurnTowards(cursorDeltaZ, -cursorDeltaX);
 
@@ -169,6 +188,7 @@ public class GridController : MonoBehaviour {
         ShiftDown(needsMoving);
 
         GenerateTiles(false);
+        CheckForSuperRow();
     }
 
     void ShiftDown (bool needsMoving)
@@ -234,10 +254,7 @@ public class GridController : MonoBehaviour {
         cell.transform.localScale = new Vector3(1f, 1f, 1f);
         cell.transform.localRotation = new Quaternion(0, 0, 0, 0);
         cell.name = pos.x + " | " + pos.y;
-        if (pos.y == 0)
-            cell.tag = "CellRow0";
-        if (pos.y == 1)
-            cell.tag = "CellRow1";
+        cell.tag = ConvertRowNumberToTag(pos.y);
 
         bool isIce = false;
         if (pos.y == 0 || pos.y == 1 || pos.y == 2 || pos.y == 3)
@@ -461,6 +478,140 @@ public class GridController : MonoBehaviour {
 
                 if (tile.size == 6 && !isCaged)
                     tile.JumpUp(this);
+            }
+        }
+    }
+
+    List<Cell> GetRowCells(int rowNumber) {
+        List<Cell> row = new List<Cell>();
+
+        foreach (List<Cell> column in cellColumns)
+        {
+            foreach (Cell cell in column)
+            {
+                string requiredTag = ConvertRowNumberToTag(rowNumber);
+
+                if (requiredTag == cell.tag)
+                    row.Add(cell);
+            }
+        }
+
+        return row;
+    }
+
+    int ConvertTagToRowNumber(string tag) {
+        int rowNumber = 0;
+
+        switch (tag)
+        {
+            case "CellRow0":
+                rowNumber = 0;
+                break;
+            case "CellRow1":
+                rowNumber = 1;
+                break;
+            case "CellRow2":
+                rowNumber = 2;
+                break;
+            case "CellRow3":
+                rowNumber = 3;
+                break;
+            case "CellRow4":
+                rowNumber = 4;
+                break;
+            case "CellRow5":
+                rowNumber = 5;
+                break;
+            case "CellRow6":
+                rowNumber = 6;
+                break;
+            case "CellRow7":
+                rowNumber = 7;
+                break;
+            case "CellRow8":
+                rowNumber = 8;
+                break;
+            default:
+                rowNumber = -1;
+                break;
+        }
+
+        return rowNumber;
+    }
+
+    string ConvertRowNumberToTag(int rowNumber) {
+        string returnTag = "";
+        switch (rowNumber)
+        {
+            case 0:
+                returnTag = "CellRow0";
+                break;
+            case 1:
+                returnTag = "CellRow1";
+                break;
+            case 2:
+                returnTag = "CellRow2";
+                break;
+            case 3:
+                returnTag = "CellRow3";
+                break;
+            case 4:
+                returnTag = "CellRow4";
+                break;
+            case 5:
+                returnTag = "CellRow5";
+                break;
+            case 6:
+                returnTag = "CellRow6";
+                break;
+            case 7:
+                returnTag = "CellRow7";
+                break;
+            case 8:
+                returnTag = "CellRow8";
+                break;
+            default:
+                returnTag = "CellRowError";
+                break;
+        }
+
+        return returnTag;
+    }
+
+    void CheckForSuperRow ()
+    {
+        for (int i = 0; i < config.y_size; i++) {
+            List<Cell> row = GetRowCells(i);
+                
+            bool allSameSize = true;
+            int sizes = -1;
+            Cell lastCell = null;
+            foreach (Cell cell in row) {
+                if (sizes == -1)
+                    sizes = cell.tile.size;
+                else if (sizes != cell.tile.size)
+                    allSameSize = false;
+
+                lastCell = cell;
+            }
+
+            if (allSameSize && lastCell)
+            {
+                if (!lastCell.transform.Find("SuperRowButton"))
+                {
+                    GameObject button = Instantiate(Resources.Load("Prefabs/SuperRowButton")) as GameObject;
+                    button.transform.parent = lastCell.transform;
+                    button.transform.name = "SuperRowButton";
+                    button.transform.localPosition = new Vector3(button.transform.localPosition.x, 0f, button.transform.localPosition.z);
+                }
+            }
+            else if (!allSameSize && lastCell)
+            {
+                Transform superRowButton = lastCell.transform.Find("SuperRowButton");
+                if (superRowButton)
+                {
+                    Destroy(superRowButton.gameObject);
+                }
             }
         }
     }

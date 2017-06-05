@@ -33,7 +33,10 @@ public class Level1_Settings : Level_Settings
         //goals[0].UpdateText();
 
 
-        goals[0] = ScriptableObject.CreateInstance<BringDownCagedWhite_Goal>();
+        /*goals[0] = ScriptableObject.CreateInstance<BringDownCagedWhite_Goal>();
+        goals[0].requiredAmount = 4;
+        goals[0].UpdateText();*/
+        goals[0] = ScriptableObject.CreateInstance<SuperRow_Goal>();
         goals[0].requiredAmount = 4;
         goals[0].UpdateText();
 

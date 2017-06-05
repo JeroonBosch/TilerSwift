@@ -19,8 +19,12 @@ public class iVec2 {
 			return false;
 		}
 	}
+    public override int GetHashCode()
+    {
+        return 0;
+    }
 
-	static public iVec2 operator + ( iVec2 a, iVec2 b ){
+    static public iVec2 operator + ( iVec2 a, iVec2 b ){
 		return new iVec2( a.x+b.x, a.y + b.y );
 	}
 

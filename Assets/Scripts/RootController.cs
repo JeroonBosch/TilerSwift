@@ -6,7 +6,6 @@ public class RootController : MonoBehaviour {
     private static RootController instance; //Singleton
     private AudioSource Audio;
     private GameManager gameManager;
-    private bool controlsEnabled;
 
     public static RootController Instance
     {
@@ -39,16 +38,6 @@ public class RootController : MonoBehaviour {
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
-    }
-
-    public void EnableControls()
-    {
-        controlsEnabled = true;
-    }
-
-    public void DisableControls()
-    {
-        controlsEnabled = false;
     }
 
     public Level_Settings GetConfigFile()
